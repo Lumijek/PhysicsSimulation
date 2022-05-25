@@ -103,13 +103,22 @@ def falls_off(param, v):
 
 
 def loop_once(initial_velocity):
+	'''
+	Main loop to model the motion of the object
+	'''
+
+
 	falls_off_track = False
 	current_velocity = initial_velocity
 	s = 0
 	param = -pi/4
 	time_elapsed = 0
+	x1 = []
+	y1 = []
 
 	while (s < s_traveled_one and current_velocity > 0) and not falls_off_track:
+		x1.append(x(param))
+		y1.append(y(param))
 		time_elapsed += del_t
 		current_velocity = change_velocity(param, current_velocity)
 		param = param + (current_velocity * del_t) / norm(param)
@@ -118,8 +127,15 @@ def loop_once(initial_velocity):
 
 		if param >= pi/4:
 			param = -pi/4
-
-	print(falls_off_track)
+			x1 = []
+			y1 = []
+	print("Initial velocity:", initial_velocity)
+	print("Falls off track:", falls_off_track)
+	print("Distance traveled:", s)
+	print("Parameter value:", param)
+	plt.plot(x1, y1)
+	plt.show()
 	return current_velocity
  
-print(loop_once(57.60143))
+print("Final velocity:", loop_once(57.60143))
+#velocity such that we travel around the loop once without falling off 57.60143 m/s
